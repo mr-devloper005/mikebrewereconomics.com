@@ -10,7 +10,7 @@ export default function DashboardSettingsPage() {
       description="Manage your account and notification preferences."
       actions={
         <Button asChild>
-          <Link href="/settings/profile">Edit Profile</Link>
+          <Link href="/settings">Edit profile</Link>
         </Button>
       }
     >
@@ -29,7 +29,7 @@ export default function DashboardSettingsPage() {
             <h2 className="text-lg font-semibold text-foreground">Notifications</h2>
             <p className="mt-2 text-sm text-muted-foreground">Control how you receive activity updates.</p>
             <Button variant="outline" className="mt-4" asChild>
-              <Link href="/dashboard/notifications">View Notifications</Link>
+              <Link href="/help">Help center</Link>
             </Button>
           </CardContent>
         </Card>

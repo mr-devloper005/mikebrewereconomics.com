@@ -16,7 +16,7 @@ export default function DashboardNotificationsPage() {
       description="Stay updated on your activity and community engagement."
       actions={
         <Button variant="outline" asChild>
-          <Link href="/dashboard">Back to Dashboard</Link>
+          <Link href="/">Back to home</Link>
         </Button>
       }
     >

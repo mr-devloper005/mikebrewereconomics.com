@@ -80,8 +80,9 @@ export const siteContent = {
 
 export const taskPageMetadata: Record<Exclude<TaskKey, 'comment' | 'org' | 'social'>, { title: string; description: string }> = {
   article: {
-    title: 'Articles and stories',
-    description: 'Read articles, stories, guides, and long-form posts across topics and interests.',
+    title: 'Article library',
+    description:
+      'Browse economics-focused articles, briefings, and long-form analysis with topics, search, and a calmer reading layout.',
   },
   listing: {
     title: 'Listings and discoverable pages',
@@ -127,16 +128,16 @@ export const taskIntroCopy: Record<
     ],
   },
   article: {
-    title: 'Articles, stories, and long-form reading',
+    title: 'How we organize the article library',
     paragraphs: [
-      'This section is built for stories, explainers, guides, and long-form reading across topics and interests.',
-      'Articles connect with listings, images, resources, and other content types so deeper reading can lead naturally into related discovery.',
-      'Use this section to browse thoughtful posts, revisit useful writing, and move into supporting content when you want more context.',
+      'This shelf is tuned for economics and policy-minded reading: explainers, data-led commentary, and reference-style notes you can return to while researching or teaching.',
+      'Topic chips and the category control filter the same catalog—use whichever fits your workflow. Site search can narrow further across titles, summaries, and tags when you have a phrase in mind.',
+      'The lead story reflects the newest item in your current view; the grid below continues in recency order and still merges anything you have saved locally in this browser.',
     ],
     links: [
-      { label: 'Explore listings', href: '/listings' },
-      { label: 'Open image sharing', href: '/image-sharing' },
-      { label: 'Browse resources', href: '/pdf' },
+      { label: 'Search the full catalog', href: '/search?task=article' },
+      { label: 'Editorial blog', href: '/blog' },
+      { label: 'About the project', href: '/about' },
     ],
   },
   classified: {

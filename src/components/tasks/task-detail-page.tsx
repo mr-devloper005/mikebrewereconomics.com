@@ -248,13 +248,13 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#f4f4f4]">
       <NavbarShell />
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <SchemaJsonLd data={schemaPayload} />
         <Link
           href={taskConfig?.route || "/"}
-          className="mb-6 inline-flex items-center text-sm text-muted-foreground hover:text-foreground"
+          className="mb-6 inline-flex items-center text-sm text-slate-600 underline decoration-slate-300 underline-offset-4 transition-colors hover:text-[#0d7a7a]"
         >
           ← Back to {taskConfig?.label || "posts"}
         </Link>
@@ -267,11 +267,11 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
         >
           <div className={cn(isClassified ? "space-y-8" : "")}>
             {isArticle ? (
-              <div className="mx-auto w-full max-w-4xl space-y-6">
-                <h1 className="text-4xl font-semibold leading-tight text-foreground">
+              <div className="mx-auto w-full max-w-4xl space-y-6 rounded-md border border-slate-200/90 bg-white p-6 shadow-[0_1px_0_rgba(0,0,0,0.04),0_18px_48px_rgba(15,23,42,0.06)] sm:p-10">
+                <h1 className="font-serif text-4xl font-semibold leading-tight tracking-tight text-[#222]">
                   {post.title}
                 </h1>
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-600">
                   <span>By {articleAuthor}</span>
                   {articleDate ? <span>{articleDate}</span> : null}
                   <Badge variant="secondary" className="inline-flex items-center gap-1">
@@ -289,10 +289,10 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
                   </div>
                 ) : null}
                 {articleSummary ? (
-                  <p className="text-base leading-7 text-muted-foreground">{articleSummary}</p>
+                  <p className="text-base leading-7 text-slate-600">{articleSummary}</p>
                 ) : null}
                 {images[0] ? (
-                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-border bg-muted">
+                  <div className="relative aspect-[16/9] w-full overflow-hidden rounded-md border border-slate-200 bg-slate-100">
                     <ContentImage
                       src={images[0]}
                       alt={`${post.title} featured image`}

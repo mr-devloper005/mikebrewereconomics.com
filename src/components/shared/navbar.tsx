@@ -4,8 +4,14 @@ import { useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Search, Menu, X, User, FileText, Building2, LayoutGrid, Tag, Image as ImageIcon, ChevronRight, Sparkles, MapPin, Plus } from 'lucide-react'
+import { Search, Menu, X, User, FileText, Building2, LayoutGrid, Tag, Image as ImageIcon, ChevronRight, ChevronDown, Sparkles, MapPin, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { useAuth } from '@/lib/auth-context'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
 import { cn } from '@/lib/utils'
@@ -86,6 +92,233 @@ const directoryPalette = {
     mobile: 'border-t border-[#d7deca] bg-[#f4f6ef]',
   },
 } as const
+
+const resourceLinks = [
+  { name: 'About', href: '/about' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Help', href: '/help' },
+  { name: 'Status', href: '/status' },
+]
+
+function EditorialLibraryNavbar() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
+  const { isAuthenticated } = useAuth()
+
+  const navigation = useMemo(() => SITE_CONFIG.tasks.filter((task) => task.enabled && task.key !== 'profile'), [])
+  const mobileNavigation = navigation.map((task) => ({
+    name: task.label,
+    href: task.route,
+    icon: taskIcons[task.key] || LayoutGrid,
+  }))
+  return (
+    <header className="sticky top-0 z-50 w-full shadow-[0_1px_0_rgba(0,0,0,0.08)]">
+      <div className="bg-black text-[11px] font-medium uppercase tracking-[0.14em] text-white/90">
+        <div className="mx-auto flex max-w-7xl items-center justify-end gap-6 px-4 py-2 sm:px-6 lg:px-8">
+          <Link href="/about" className="transition-colors hover:text-white">
+            Help
+          </Link>
+          <Link href="/search" className="underline decoration-white/40 underline-offset-4 transition-colors hover:text-white">
+            Advanced search
+          </Link>
+          {!isAuthenticated ? (
+            <Link href="/login" className="transition-colors hover:text-white">
+              Sign in
+            </Link>
+          ) : null}
+        </div>
+      </div>
+
+      <div className="border-b border-white/10 bg-[#222222] text-white">
+        <nav className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6 lg:gap-8 lg:px-8">
+          <Link href="/" className="flex min-w-0 shrink-0 items-center gap-2.5">
+            <span className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-md bg-white p-1">
+              <img src="/favicon.png?v=20260401" alt="" width="32" height="32" className="h-full w-full object-contain" />
+            </span>
+            <span className="min-w-0 leading-tight">
+              <span className="block truncate text-sm font-bold tracking-tight text-white">{SITE_CONFIG.name}</span>
+              <span className="block truncate text-[9px] font-semibold uppercase tracking-[0.2em] text-white/55">
+                {siteContent.navbar.tagline}
+              </span>
+            </span>
+          </Link>
+
+          <div className="hidden items-center gap-1 lg:flex">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white/90 transition-colors hover:bg-white/10 hover:text-white"
+                >
+                  Browse
+                  <ChevronDown className="h-3.5 w-3.5 opacity-70" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="min-w-[200px] border-slate-200 bg-white text-slate-900 shadow-lg">
+                {navigation.map((task) => {
+                  const Icon = taskIcons[task.key] || LayoutGrid
+                  return (
+                    <DropdownMenuItem key={task.key} asChild>
+                      <Link href={task.route} className="flex cursor-pointer items-center gap-2">
+                        <Icon className="h-4 w-4 text-[#0d7a7a]" />
+                        {task.label}
+                      </Link>
+                    </DropdownMenuItem>
+                  )
+                })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-1 rounded-md px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white/90 transition-colors hover:bg-white/10 hover:text-white"
+                >
+                  Resources
+                  <ChevronDown className="h-3.5 w-3.5 opacity-70" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="min-w-[200px] border-slate-200 bg-white text-slate-900 shadow-lg">
+                {resourceLinks.map((item) => (
+                  <DropdownMenuItem key={item.href} asChild>
+                    <Link href={item.href} className="cursor-pointer">
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuItem asChild>
+                  <Link href="/search" className="cursor-pointer">
+                    Search
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+
+          <form
+            action="/search"
+            method="get"
+            className="ml-auto hidden min-w-0 flex-1 items-stretch justify-end gap-0 md:flex md:max-w-xl lg:max-w-2xl"
+          >
+            <div className="flex w-full flex-col items-end gap-1">
+              <span className="sr-only">Search articles and resources</span>
+              <div className="flex w-full overflow-hidden rounded-sm border border-white/20 bg-white shadow-sm">
+                <input
+                  name="q"
+                  type="search"
+                  placeholder="Search articles, authors, topics…"
+                  className="h-10 min-w-0 flex-1 border-0 bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#333399]/30 focus:ring-inset"
+                  autoComplete="off"
+                />
+                <button
+                  type="submit"
+                  className="flex h-10 w-11 shrink-0 items-center justify-center bg-[#333399] text-white transition-colors hover:bg-[#2a2a7a]"
+                  aria-label="Search"
+                >
+                  <Search className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div className="flex shrink-0 items-center gap-2">
+            {isAuthenticated ? (
+              <NavbarAuthControls />
+            ) : (
+              <Button
+                size="sm"
+                asChild
+                className="hidden rounded-sm border-0 bg-[#0d7a7a] px-4 text-xs font-semibold uppercase tracking-[0.1em] text-white hover:bg-[#0a6565] sm:inline-flex"
+              >
+                <Link href="/register">Join</Link>
+              </Button>
+            )}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-white hover:bg-white/10 lg:hidden"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-expanded={isMobileMenuOpen}
+            >
+              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
+        </nav>
+
+        <div className="border-t border-white/10 px-4 pb-3 md:hidden">
+          <form action="/search" method="get" className="flex overflow-hidden rounded-sm border border-white/20 bg-white">
+            <input
+              name="q"
+              type="search"
+              placeholder="Search…"
+              className="h-10 min-w-0 flex-1 border-0 bg-white px-3 text-sm text-slate-900 focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="flex h-10 w-11 shrink-0 items-center justify-center bg-[#333399] text-white"
+              aria-label="Search"
+            >
+              <Search className="h-4 w-4" />
+            </button>
+          </form>
+        </div>
+
+        {isMobileMenuOpen ? (
+          <div className="border-t border-white/10 bg-[#1a1a1a] lg:hidden">
+            <div className="mx-auto max-w-7xl space-y-1 px-4 py-4">
+              {mobileNavigation.map((item) => {
+                const isActive = pathname.startsWith(item.href)
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={cn(
+                      'flex items-center gap-3 rounded-md px-3 py-3 text-sm font-semibold',
+                      isActive ? 'bg-[#0d7a7a]/25 text-white' : 'text-white/85 hover:bg-white/5',
+                    )}
+                  >
+                    <item.icon className="h-5 w-5 text-[#5cb3b3]" />
+                    {item.name}
+                  </Link>
+                )
+              })}
+              {resourceLinks.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block rounded-md px-3 py-2.5 text-sm text-white/80 hover:bg-white/5"
+                >
+                  {item.name}
+                </Link>
+              ))}
+              {isAuthenticated ? (
+                <Link
+                  href="/create/article"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="mt-1 block rounded-md border border-[#0d7a7a]/50 bg-[#0d7a7a]/20 px-3 py-3 text-center text-sm font-semibold text-white"
+                >
+                  New article
+                </Link>
+              ) : null}
+              {!isAuthenticated ? (
+                <Link
+                  href="/login"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="mt-2 block rounded-md border border-white/20 px-3 py-3 text-center text-sm font-semibold text-white"
+                >
+                  Sign in
+                </Link>
+              ) : null}
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </header>
+  )
+}
 
 export function Navbar() {
   if (NAVBAR_OVERRIDE_ENABLED) {
@@ -242,6 +475,10 @@ export function Navbar() {
         </aside>
       </>
     )
+  }
+
+  if (recipe.navbar === 'editorial-bar') {
+    return <EditorialLibraryNavbar />
   }
 
   const style = variantClasses[recipe.navbar]

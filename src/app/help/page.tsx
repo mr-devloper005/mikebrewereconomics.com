@@ -1,52 +1,52 @@
 ﻿import Link from 'next/link'
-import { PageShell } from '@/components/shared/page-shell'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import { NavbarShell } from '@/components/shared/navbar-shell'
+import { Footer } from '@/components/shared/footer'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { mockFaqs } from '@/data/mock-data'
 
-const topics = [
-  { title: 'Getting Started', description: 'Create your account and publish your first post.' },
-  { title: 'Bookmarks & Collections', description: 'Save links, organize folders, and share collections.' },
-  { title: 'Listings & Ads', description: 'Manage your business listings and classifieds.' },
+const faqs = [
+  {
+    q: 'How do I search for an article?',
+    a: 'Use the search field in the site header (desktop) or open Search in the mobile menu. Results match titles, summaries, and tags.',
+  },
+  {
+    q: 'How do I submit or draft an article?',
+    a: 'Sign in, then use New article in the navigation. You must be logged in; drafts are stored locally in your browser for this demo.',
+  },
+  {
+    q: 'Where is my account data stored?',
+    a: 'Sign-in for this site uses local browser storage on your device. It is not a cloud account unless your deployment connects to a real API.',
+  },
 ]
 
 export default function HelpPage() {
   return (
-    <PageShell
-      title="Help Center"
-      description="Find answers, guides, and best practices."
-      actions={
-        <Button asChild>
-          <Link href="/contact">Contact Support</Link>
-        </Button>
-      }
-    >
-      <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="grid gap-6 md:grid-cols-2">
-          {topics.map((topic) => (
-            <Card key={topic.title} className="border-border bg-card transition-transform hover:-translate-y-1">
-              <CardContent className="p-6">
-                <h2 className="text-lg font-semibold text-foreground">{topic.title}</h2>
-                <p className="mt-2 text-sm text-muted-foreground">{topic.description}</p>
-              </CardContent>
-            </Card>
-          ))}
+    <div className="min-h-screen bg-[#f4f4f4]">
+      <NavbarShell />
+      <main className="mx-auto max-w-xl px-4 py-14 sm:px-6 lg:px-8">
+        <h1 className="text-center font-serif text-3xl font-semibold text-[#222]">Help</h1>
+        <p className="mt-3 text-center text-sm text-slate-600">Quick answers for reading and writing on this site.</p>
+
+        <div className="mt-10 rounded-xl border border-slate-200 bg-white p-2 shadow-sm">
+          <Accordion type="single" collapsible className="w-full">
+            {faqs.map((item, i) => (
+              <AccordionItem key={item.q} value={`item-${i}`} className="border-slate-100 px-2">
+                <AccordionTrigger className="text-left text-sm font-medium text-[#222] hover:no-underline">
+                  {item.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-sm leading-7 text-slate-600">{item.a}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
-        <Card className="border-border bg-card">
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold text-foreground">FAQ</h3>
-            <Accordion type="single" collapsible className="mt-4">
-              {mockFaqs.map((faq) => (
-                <AccordionItem key={faq.id} value={faq.id}>
-                  <AccordionTrigger>{faq.question}</AccordionTrigger>
-                  <AccordionContent>{faq.answer}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </CardContent>
-        </Card>
-      </div>
-    </PageShell>
+
+        <p className="mt-10 text-center text-sm text-slate-600">
+          Still stuck?{' '}
+          <Link href="/contact" className="font-semibold text-[#0d7a7a] underline underline-offset-2">
+            Contact us
+          </Link>
+        </p>
+      </main>
+      <Footer />
+    </div>
   )
 }
