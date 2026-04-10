@@ -1,68 +1,41 @@
-import Link from "next/link";
-import { PageShell } from "@/components/shared/page-shell";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { SITE_CONFIG } from "@/lib/site-config";
+import Link from 'next/link'
+import { NavbarShell } from '@/components/shared/navbar-shell'
+import { Footer } from '@/components/shared/footer'
+import { SITE_CONFIG } from '@/lib/site-config'
 
-const roles = [
-  { title: "Product Designer", location: "Remote", type: "Full-time", level: "Mid" },
-  { title: "Frontend Engineer", location: "New York, NY", type: "Full-time", level: "Senior" },
-  { title: "Community Lead", location: "Remote", type: "Part-time", level: "Mid" },
-];
-
-const benefits = [
-  "Flexible schedules and remote-first culture",
-  "Health, dental, and vision coverage",
-  "Annual learning stipend",
-  "Quarterly offsites and team retreats",
-];
+const openings = [
+  { title: 'Economics writer (contract)', location: 'Remote', detail: '2–4 pieces per month; strong editing process.' },
+  { title: 'Research assistant', location: 'Remote', detail: 'Support charts, citations, and data checks for long articles.' },
+]
 
 export default function CareersPage() {
   return (
-    <PageShell
-      title="Careers"
-      description={`Help us build the future of community-driven publishing at ${SITE_CONFIG.name}.`}
-      actions={
-        <Button asChild>
-          <Link href="/contact">Apply Now</Link>
-        </Button>
-      }
-    >
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="space-y-4">
-          {roles.map((role) => (
-            <Card key={role.title} className="border-border bg-card">
-              <CardContent className="p-6">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="secondary">{role.level}</Badge>
-                  <Badge variant="outline">{role.type}</Badge>
-                </div>
-                <h2 className="mt-3 text-lg font-semibold text-foreground">{role.title}</h2>
-                <p className="mt-1 text-sm text-muted-foreground">{role.location}</p>
-                <Button variant="outline" className="mt-4" asChild>
-                  <Link href="/contact">View Role</Link>
-                </Button>
-              </CardContent>
-            </Card>
+    <div className="min-h-screen bg-white">
+      <NavbarShell />
+      <main className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
+        <h1 className="text-3xl font-bold tracking-tight text-[#111]">Careers</h1>
+        <p className="mt-4 text-sm leading-7 text-[#555]">
+          {SITE_CONFIG.name} hires slowly and favors editors and writers who care about careful economics communication. Below
+          are illustrative roles; availability depends on budget and editorial calendar.
+        </p>
+        <ul className="mt-12 space-y-8">
+          {openings.map((job) => (
+            <li key={job.title} className="border-b border-slate-200 pb-8 last:border-0">
+              <h2 className="text-lg font-semibold text-[#111]">{job.title}</h2>
+              <p className="mt-1 text-xs font-medium uppercase tracking-wide text-slate-500">{job.location}</p>
+              <p className="mt-3 text-sm leading-7 text-[#555]">{job.detail}</p>
+            </li>
           ))}
-        </div>
-        <Card className="border-border bg-card">
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold text-foreground">Why {SITE_CONFIG.name}</h3>
-            <p className="mt-2 text-sm text-muted-foreground">
-              We are building a product that helps people discover and share the best knowledge on the web.
-            </p>
-            <div className="mt-4 space-y-2 text-sm text-muted-foreground">
-              {benefits.map((benefit) => (
-                <div key={benefit} className="rounded-md border border-border bg-secondary/40 px-3 py-2">
-                  {benefit}
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </PageShell>
-  );
+        </ul>
+        <p className="mt-12 text-sm text-[#555]">
+          To apply, email a CV and short cover letter via{' '}
+          <Link href="/contact" className="font-semibold text-[#111] underline">
+            our contact page
+          </Link>
+          .
+        </p>
+      </main>
+      <Footer />
+    </div>
+  )
 }

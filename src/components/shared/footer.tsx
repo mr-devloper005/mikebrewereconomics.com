@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FileText, Building2, LayoutGrid, Tag, Github, Twitter, Linkedin, Image as ImageIcon, User, ArrowRight, Sparkles } from 'lucide-react'
+import { FileText, Building2, LayoutGrid, Tag, Github, Twitter, Linkedin, Image as ImageIcon, User, ArrowRight } from 'lucide-react'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
 import { siteContent } from '@/config/site.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
@@ -26,10 +26,7 @@ const footerLinks = {
   })),
   company: [
     { name: 'About', href: '/about' },
-    { name: 'Team', href: '/team' },
-    { name: 'Careers', href: '/careers' },
     { name: 'Blog', href: '/blog' },
-    { name: 'Press', href: '/press' },
   ],
   resources: [
     { name: 'Help Center', href: '/help' },
@@ -140,32 +137,66 @@ export function Footer() {
 
   if (recipe.footer === 'editorial-footer') {
     return (
-      <footer className="border-t border-[#dbc6b6] bg-[linear-gradient(180deg,#fff9f0_0%,#fff1df_100%)] text-[#2f1d16]">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr_0.9fr]">
-            <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#dbc6b6] bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#72594a]">
-                <Sparkles className="h-3.5 w-3.5" />
-                Editorial desk
+      <footer className="border-t border-slate-200/80 bg-[#f9f9f9] text-[#333]">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
+            <Link href="/" className="inline-flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-md border border-slate-200 bg-white p-1">
+                <img src="/favicon.png?v=20260401" alt="" width="36" height="36" className="h-full w-full object-contain" />
               </div>
-              <h3 className="mt-5 text-3xl font-semibold tracking-[-0.04em]">{SITE_CONFIG.name}</h3>
-              <p className="mt-4 max-w-md text-sm leading-7 text-[#72594a]">{SITE_CONFIG.description}</p>
+              <div>
+                <span className="block text-lg font-bold tracking-tight text-[#222]">{SITE_CONFIG.name}</span>
+                <span className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">{siteContent.footer.tagline}</span>
+              </div>
+            </Link>
+            <div className="flex flex-wrap gap-3">
+              {socialLinks.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-600 transition-colors hover:border-[#0d7a7a] hover:text-[#0d7a7a]"
+                >
+                  <item.icon className="h-4 w-4" />
+                </Link>
+              ))}
             </div>
-            <div>
-              <h4 className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8b6d5a]">Sections</h4>
-              <ul className="mt-4 space-y-3 text-sm">
-                {footerLinks.platform.map((item: any) => (
-                  <li key={item.name}><Link href={item.href} className="hover:text-[#2f1d16]">{item.name}</Link></li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8b6d5a]">Company</h4>
-              <ul className="mt-4 space-y-3 text-sm">
-                {footerLinks.company.map((item) => (
-                  <li key={item.name}><Link href={item.href} className="hover:text-[#2f1d16]">{item.name}</Link></li>
-                ))}
-              </ul>
+          </div>
+          <nav className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-slate-200/90 pt-8 text-sm font-medium text-[#333]">
+            <Link href="/" className="transition-colors hover:text-[#0d7a7a]">
+              Home
+            </Link>
+            {footerLinks.platform.map((item: any) => (
+              <Link key={item.name} href={item.href} className="transition-colors hover:text-[#0d7a7a]">
+                {item.name}
+              </Link>
+            ))}
+            {footerLinks.company.map((item) => (
+              <Link key={item.name} href={item.href} className="transition-colors hover:text-[#0d7a7a]">
+                {item.name}
+              </Link>
+            ))}
+            <Link href="/search" className="transition-colors hover:text-[#0d7a7a]">
+              Search
+            </Link>
+            <Link href="/help" className="transition-colors hover:text-[#0d7a7a]">
+              Help
+            </Link>
+            <Link href="/contact" className="transition-colors hover:text-[#0d7a7a]">
+              Contact
+            </Link>
+          </nav>
+          <div className="mt-10 flex flex-col gap-3 border-t border-slate-200/90 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <p>
+              &copy; {new Date().getFullYear()} {SITE_CONFIG.name}. All rights reserved.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              {footerLinks.legal.map((item) => (
+                <Link key={item.name} href={item.href} className="transition-colors hover:text-[#222]">
+                  {item.name}
+                </Link>
+              ))}
             </div>
           </div>
         </div>

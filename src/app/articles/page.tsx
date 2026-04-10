@@ -1,4 +1,4 @@
-import { TaskListPage } from "@/components/tasks/task-list-page";
+import { ArticlesLibraryPage } from "@/components/tasks/articles-library-page";
 import { buildTaskMetadata } from "@/lib/seo";
 import { taskPageMetadata } from "@/config/site.content";
 
@@ -12,5 +12,5 @@ export const generateMetadata = () =>
   });
 
 export default function ArticlesPage({ searchParams }: { searchParams?: { category?: string } }) {
-  return <TaskListPage task="article" category={searchParams?.category} />;
+  return <ArticlesLibraryPage category={searchParams?.category} />;
 }

@@ -92,7 +92,7 @@ export default async function SearchPage({
               className="h-11 pl-9"
             />
           </div>
-          <Button type="submit" className="h-11">
+          <Button type="submit" className="h-11 rounded-sm bg-[#333399] px-6 text-white hover:bg-[#2a2a7a]">
             Search
           </Button>
         </form>
@@ -107,8 +107,8 @@ export default async function SearchPage({
           })}
         </div>
       ) : (
-        <div className="rounded-2xl border border-dashed border-border p-10 text-center text-muted-foreground">
-          No matching posts yet.
+        <div className="rounded-md border border-dashed border-slate-300 bg-white/80 p-12 text-center text-sm text-slate-600">
+          No matching articles or posts yet. Try another term or use Advanced search from the header.
         </div>
       )}
     </PageShell>

@@ -28,7 +28,7 @@ const variantShells = {
   'listing-directory': 'bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.08),transparent_24%),linear-gradient(180deg,#f8fbff_0%,#ffffff_100%)]',
   'listing-showcase': 'bg-[linear-gradient(180deg,#ffffff_0%,#f4f9ff_100%)]',
   'article-editorial': 'bg-[radial-gradient(circle_at_top_left,rgba(251,191,36,0.08),transparent_20%),linear-gradient(180deg,#fff8ef_0%,#ffffff_100%)]',
-  'article-journal': 'bg-[linear-gradient(180deg,#fffdf9_0%,#f7f1ea_100%)]',
+  'article-journal': 'bg-[linear-gradient(180deg,#fafafa_0%,#f4f4f4_100%)]',
   'image-masonry': 'bg-[linear-gradient(180deg,#09101d_0%,#111c2f_100%)] text-white',
   'image-portfolio': 'bg-[linear-gradient(180deg,#07111f_0%,#13203a_100%)] text-white',
   'profile-creator': 'bg-[linear-gradient(180deg,#0a1120_0%,#101c34_100%)] text-white',
@@ -71,11 +71,11 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
       }
     : layoutKey.startsWith('article') || layoutKey.startsWith('sbm')
       ? {
-          muted: 'text-[#72594a]',
-          panel: 'border border-[#dbc6b6] bg-white/90',
-          soft: 'border border-[#dbc6b6] bg-[#fff8ef]',
-          input: 'border border-[#dbc6b6] bg-white text-[#2f1d16]',
-          button: 'bg-[#2f1d16] text-[#fff4e4] hover:bg-[#452920]',
+          muted: 'text-slate-600',
+          panel: 'border border-slate-200/90 bg-white shadow-[0_1px_0_rgba(0,0,0,0.04),0_16px_44px_rgba(15,23,42,0.06)]',
+          soft: 'border border-slate-200/80 bg-white',
+          input: 'border border-slate-200 bg-white text-slate-900 focus:border-[#0d7a7a] focus:ring-2 focus:ring-[#0d7a7a]/15',
+          button: 'rounded-sm bg-[#333399] text-white hover:bg-[#2a2a7a]',
         }
       : {
           muted: 'text-slate-600',
@@ -243,9 +243,15 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
             {intro.paragraphs.map((paragraph) => (
               <p key={paragraph.slice(0, 40)} className={`mt-4 text-sm leading-7 ${ui.muted}`}>{paragraph}</p>
             ))}
-            <div className="mt-4 flex flex-wrap gap-4 text-sm">
+            <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2 border-t border-slate-200 pt-6 text-sm">
               {intro.links.map((link) => (
-                <a key={link.href} href={link.href} className="font-semibold text-foreground hover:underline">{link.label}</a>
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="font-semibold text-[#222] underline-offset-4 transition-colors hover:text-[#0d7a7a] hover:underline"
+                >
+                  {link.label}
+                </a>
               ))}
             </div>
           </section>
