@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen, Clock, FileText, Layers, Search } from "lucide-react";
+import { ArrowRight, BookOpen, Clock, FileText, Layers, Search, TrendingUp, BarChart3, Newspaper, Sparkles, Filter, ChevronRight } from "lucide-react";
 import { NavbarShell } from "@/components/shared/navbar-shell";
 import { Footer } from "@/components/shared/footer";
 import { ContentImage } from "@/components/shared/content-image";
@@ -114,7 +114,7 @@ export async function ArticlesLibraryPage({ category }: { category?: string }) {
       : leadCategoryRaw || null;
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#fafafa_0%,#f0f0f0_100%)] text-slate-900">
+    <div className="min-h-screen bg-[#f8fafc] text-slate-900">
       <NavbarShell />
       <SchemaJsonLd
         data={{
@@ -127,80 +127,98 @@ export async function ArticlesLibraryPage({ category }: { category?: string }) {
         }}
       />
 
-      <header className="border-b border-slate-800/80 bg-[#1e293b] text-white">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
-          <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-teal-200/90">
-            <Link href="/" className="transition-colors hover:text-white">
+      <header className="relative overflow-hidden bg-[#0f172a] text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(13,148,136,0.15)_0%,_transparent_50%)]" />
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+          <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
+            <Link href="/" className="transition-colors hover:text-teal-300">
               Home
             </Link>
-            <span className="text-slate-500" aria-hidden>
-              /
-            </span>
-            <span className="text-slate-300">Library</span>
+            <ChevronRight className="h-3 w-3 text-slate-600" aria-hidden />
+            <span className="text-slate-300">Articles</span>
             {normalizedCategory !== "all" ? (
               <>
-                <span className="text-slate-500" aria-hidden>
-                  /
-                </span>
-                <span className="text-white">{categoryLabel(normalizedCategory)}</span>
+                <ChevronRight className="h-3 w-3 text-slate-600" aria-hidden />
+                <span className="text-teal-300">{categoryLabel(normalizedCategory)}</span>
               </>
             ) : null}
           </div>
 
-          <div className="mt-6 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+          <div className="mt-8 grid gap-12 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
-              <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">
-                <FileText className="h-4 w-4 text-teal-300" aria-hidden />
-                Article library
-              </p>
-              <h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-[-0.04em] sm:text-5xl">
-                Economics reading, briefings, and long-form analysis
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.24em] text-teal-400">
+                <Newspaper className="h-4 w-4" aria-hidden />
+                <span>Economics & Finance Insights</span>
+              </div>
+              <h1 className="mt-5 max-w-3xl text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                Market Intelligence & Analysis
               </h1>
-              <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300">
-                Browse by topic, filter the full shelf, or jump into search scoped to articles. The layout keeps
-                hierarchy clear: one lead story for your current view, then a dense grid for scanning the rest.
+              <p className="mt-5 max-w-2xl text-base leading-8 text-slate-400">
+                Deep-dive briefings, economic forecasts, and data-driven analysis from industry experts. 
+                Stay ahead with curated insights across markets, policy, and global trends.
               </p>
-              <dl className="mt-8 flex flex-wrap gap-8 text-sm">
-                <div>
-                  <dt className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">In catalog</dt>
-                  <dd className="mt-1 text-2xl font-semibold tabular-nums text-white">{posts.length}</dd>
+              <div className="mt-8 flex flex-wrap items-center gap-6">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500/20">
+                    <BarChart3 className="h-5 w-5 text-teal-400" />
+                  </div>
+                  <div>
+                    <p className="text-lg font-bold text-white">{posts.length}+</p>
+                    <p className="text-xs text-slate-400">Articles Published</p>
+                  </div>
                 </div>
-                <div>
-                  <dt className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">In this view</dt>
-                  <dd className="mt-1 text-2xl font-semibold tabular-nums text-teal-200">{inView.length}</dd>
+                <div className="h-8 w-px bg-slate-700" />
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500/20">
+                    <TrendingUp className="h-5 w-5 text-teal-400" />
+                  </div>
+                  <div>
+                    <p className="text-lg font-bold text-white">{inView.length}</p>
+                    <p className="text-xs text-slate-400">In Current View</p>
+                  </div>
                 </div>
-              </dl>
+                <div className="h-8 w-px bg-slate-700" />
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500/20">
+                    <Sparkles className="h-5 w-5 text-teal-400" />
+                  </div>
+                  <div>
+                    <p className="text-lg font-bold text-white">Weekly</p>
+                    <p className="text-xs text-slate-400">Fresh Updates</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <form
-              className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
+              className="w-full max-w-md rounded-2xl border border-slate-700/50 bg-slate-800/50 p-6 backdrop-blur-sm lg:w-96"
               action="/search"
               method="get"
             >
               <input type="hidden" name="task" value="article" />
-              <label htmlFor="articles-lib-search" className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-                Search articles
+              <label htmlFor="articles-lib-search" className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                <Search className="h-3.5 w-3.5" />
+                Find articles
               </label>
-              <div className="mt-3 flex gap-2">
+              <div className="mt-4 flex gap-2">
                 <div className="relative flex-1">
-                  <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
                   <input
                     id="articles-lib-search"
                     name="q"
                     type="search"
-                    placeholder="Titles, summaries, tags…"
-                    className="h-12 w-full rounded-xl border border-white/15 bg-slate-900/40 pl-10 pr-3 text-sm text-white placeholder:text-slate-500 focus:border-teal-400/60 focus:outline-none focus:ring-2 focus:ring-teal-500/25"
+                    placeholder="Search topics, authors, tags..."
+                    className="h-12 w-full rounded-xl border border-slate-600/50 bg-slate-900/60 px-4 text-sm text-white placeholder:text-slate-500 focus:border-teal-500/60 focus:outline-none focus:ring-2 focus:ring-teal-500/20"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="h-12 shrink-0 rounded-xl bg-teal-500 px-5 text-sm font-semibold text-slate-950 transition-colors hover:bg-teal-400"
+                  className="h-12 shrink-0 rounded-xl bg-teal-500 px-6 text-sm font-semibold text-slate-900 transition-all hover:bg-teal-400 hover:shadow-lg hover:shadow-teal-500/25"
                 >
-                  Go
+                  Search
                 </button>
               </div>
               <p className="mt-3 text-xs text-slate-500">
-                Tip: combine with the category control on the right to teach or present a single topic lane.
+                Try searching for "inflation", "GDP", or specific markets
               </p>
             </form>
           </div>
@@ -208,33 +226,30 @@ export async function ArticlesLibraryPage({ category }: { category?: string }) {
       </header>
 
       <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
-        <div className="mb-8 flex flex-col gap-4 border-b border-slate-200/90 pb-8 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex items-start gap-3">
-            <Layers className="mt-0.5 h-5 w-5 shrink-0 text-[#0d7a7a]" aria-hidden />
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Topics</p>
-              <p className="mt-1 text-sm text-slate-600">Jump to common economics-adjacent lanes. All categories stay available in the filter.</p>
-            </div>
+        <div className="mb-10">
+          <div className="flex items-center gap-2 mb-4">
+            <Filter className="h-4 w-4 text-teal-600" aria-hidden />
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Browse by Topic</p>
           </div>
           <nav aria-label="Article topics" className="flex flex-wrap gap-2">
             <Link
               href={route}
-              className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
+              className={`rounded-lg px-5 py-2.5 text-sm font-medium transition-all ${
                 normalizedCategory === "all"
-                  ? "border-[#333399] bg-[#333399] text-white"
-                  : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
+                  ? "bg-teal-600 text-white shadow-md shadow-teal-500/25"
+                  : "bg-white text-slate-600 border border-slate-200 hover:border-teal-300 hover:text-teal-600"
               }`}
             >
-              All
+              All Articles
             </Link>
             {topicChips.map(({ slug, name, href, active }) => (
               <Link
                 key={slug}
                 href={href}
-                className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
+                className={`rounded-lg px-5 py-2.5 text-sm font-medium transition-all ${
                   active
-                    ? "border-[#333399] bg-[#333399] text-white"
-                    : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
+                    ? "bg-teal-600 text-white shadow-md shadow-teal-500/25"
+                    : "bg-white text-slate-600 border border-slate-200 hover:border-teal-300 hover:text-teal-600"
                 }`}
               >
                 {name}
@@ -246,42 +261,43 @@ export async function ArticlesLibraryPage({ category }: { category?: string }) {
         <div className="mb-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_260px] lg:items-start">
           <div className="min-w-0 space-y-10">
             {lead ? (
-              <section aria-labelledby="lead-heading" className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-[0_1px_0_rgba(0,0,0,0.04),0_20px_50px_rgba(15,23,42,0.08)]">
-                <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
-                  <Link href={leadHref} className="relative block aspect-[16/10] bg-slate-100 lg:aspect-auto lg:min-h-[280px]">
+              <section aria-labelledby="lead-heading" className="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/60 transition-all hover:shadow-lg hover:shadow-slate-900/5 hover:ring-teal-500/20">
+                <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
+                  <Link href={leadHref} className="relative block aspect-[16/10] overflow-hidden bg-slate-100 lg:aspect-auto lg:min-h-[320px]">
                     <ContentImage
                       src={leadImage}
                       alt={lead.title || "Article cover"}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 1024px) 100vw, 55vw"
                       priority
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                   </Link>
                   <div className="flex flex-col justify-center p-8 sm:p-10">
-                    <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                    <div className="flex flex-wrap items-center gap-3 text-xs">
                       {leadCategory ? (
-                        <span className="rounded-full bg-slate-100 px-3 py-1 font-semibold text-slate-700">{leadCategory}</span>
+                        <span className="rounded-md bg-teal-50 px-3 py-1 font-semibold text-teal-700">{leadCategory}</span>
                       ) : null}
-                      <span className="inline-flex items-center gap-1">
+                      <span className="inline-flex items-center gap-1.5 text-slate-500">
                         <Clock className="h-3.5 w-3.5" aria-hidden />
-                        Lead for this view
+                        Featured
                       </span>
                     </div>
-                    <h2 id="lead-heading" className="mt-4 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
-                      <Link href={leadHref} className="hover:text-[#0d7a7a]">
+                    <h2 id="lead-heading" className="mt-5 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+                      <Link href={leadHref} className="hover:text-teal-600 transition-colors">
                         {lead.title}
                       </Link>
                     </h2>
-                    <p className="mt-4 text-sm leading-7 text-slate-600">
-                      {excerpt(lead.summary || leadContent?.excerpt || leadContent?.description || leadContent?.body)}
+                    <p className="mt-4 text-sm leading-7 text-slate-500">
+                      {excerpt(lead.summary || leadContent?.excerpt || leadContent?.description || leadContent?.body, 240)}
                     </p>
                     <Link
                       href={leadHref}
-                      className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#333399] hover:text-[#0d7a7a]"
+                      className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-teal-600 hover:text-teal-700 transition-colors"
                     >
-                      Read full article
-                      <ArrowRight className="h-4 w-4" aria-hidden />
+                      Read full analysis
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden />
                     </Link>
                   </div>
                 </div>
@@ -289,13 +305,13 @@ export async function ArticlesLibraryPage({ category }: { category?: string }) {
             ) : null}
 
             <section id="article-grid" aria-labelledby="grid-heading">
-              <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+              <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
                 <div>
-                  <h2 id="grid-heading" className="flex items-center gap-2 text-lg font-semibold text-slate-900">
-                    <BookOpen className="h-5 w-5 text-[#0d7a7a]" aria-hidden />
-                    {normalizedCategory === "all" ? "Latest in the library" : `More in ${categoryLabel(normalizedCategory)}`}
+                  <h2 id="grid-heading" className="flex items-center gap-2.5 text-xl font-bold text-slate-900">
+                    <BookOpen className="h-5 w-5 text-teal-600" aria-hidden />
+                    {normalizedCategory === "all" ? "Latest Publications" : `More in ${categoryLabel(normalizedCategory)}`}
                   </h2>
-                  <p className="mt-1 text-sm text-slate-600">Cards respect your category filter and any posts saved in this browser.</p>
+                  <p className="mt-1.5 text-sm text-slate-500">Curated analysis and reports from our economics desk</p>
                 </div>
               </div>
               <TaskListClient
@@ -307,59 +323,68 @@ export async function ArticlesLibraryPage({ category }: { category?: string }) {
             </section>
           </div>
 
-          <aside className="space-y-6 rounded-2xl border border-slate-200/90 bg-white p-6 shadow-[0_1px_0_rgba(0,0,0,0.04)] lg:sticky lg:top-24">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Filter shelf</p>
-              <p className="mt-2 text-sm text-slate-600">Narrow the same catalog the chips use—ideal for every category, not only the ribbon.</p>
+          <aside className="space-y-6 lg:sticky lg:top-24">
+            <div className="rounded-2xl border border-slate-200/60 bg-white p-6 shadow-sm">
+              <div className="flex items-center gap-2 mb-1">
+                <Filter className="h-4 w-4 text-teal-600" aria-hidden />
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Filter by Category</p>
+              </div>
+              <p className="mb-5 text-sm text-slate-500">Refine your reading list</p>
+              <form className="grid gap-3" action={route} method="get">
+                <label className="text-xs font-medium text-slate-700 sr-only" htmlFor="articles-cat">
+                  Category
+                </label>
+                <select
+                  id="articles-cat"
+                  name="category"
+                  defaultValue={normalizedCategory === "all" ? "all" : normalizedCategory}
+                  className="h-12 w-full rounded-xl border border-slate-200 bg-slate-50 px-4 text-sm text-slate-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500/15"
+                >
+                  <option value="all">All categories</option>
+                  {CATEGORY_OPTIONS.map((item) => (
+                    <option key={item.slug} value={item.slug}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  type="submit"
+                  className="h-12 rounded-xl bg-teal-600 text-sm font-semibold text-white transition-all hover:bg-teal-700 hover:shadow-md hover:shadow-teal-500/20"
+                >
+                  Apply Filter
+                </button>
+              </form>
             </div>
-            <form className="grid gap-3" action={route} method="get">
-              <label className="text-xs font-medium text-slate-700" htmlFor="articles-cat">
-                Category
-              </label>
-              <select
-                id="articles-cat"
-                name="category"
-                defaultValue={normalizedCategory === "all" ? "all" : normalizedCategory}
-                className="h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900 focus:border-[#0d7a7a] focus:outline-none focus:ring-2 focus:ring-[#0d7a7a]/15"
-              >
-                <option value="all">All categories</option>
-                {CATEGORY_OPTIONS.map((item) => (
-                  <option key={item.slug} value={item.slug}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-              <button
-                type="submit"
-                className="h-11 rounded-xl bg-[#333399] text-sm font-semibold text-white transition-colors hover:bg-[#2a2a7a]"
-              >
-                Apply filter
-              </button>
-            </form>
-            <div className="border-t border-slate-100 pt-6 text-xs leading-relaxed text-slate-500">
-              <p>
-                Prefer keyboard flow? Focus the search field in the hero, then tab to topics and the grid below.
+
+            <div className="rounded-2xl border border-slate-200/60 bg-gradient-to-br from-teal-50 to-emerald-50 p-6">
+              <div className="flex items-center gap-2 mb-3">
+                <Sparkles className="h-4 w-4 text-teal-600" aria-hidden />
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-700">Pro Tip</p>
+              </div>
+              <p className="text-sm leading-6 text-teal-800">
+                Use the search bar at the top for quick lookups. Combine with category filters to drill down into specific economic sectors.
               </p>
             </div>
           </aside>
         </div>
 
         {intro ? (
-          <section className="rounded-2xl border border-slate-200/90 bg-white p-8 shadow-[0_18px_50px_rgba(15,23,42,0.06)] sm:p-10">
-            <h2 className="text-2xl font-semibold text-slate-900">{intro.title}</h2>
+          <section className="rounded-2xl border border-slate-200/60 bg-white p-8 shadow-sm sm:p-10">
+            <h2 className="text-2xl font-bold text-slate-900">{intro.title}</h2>
             {intro.paragraphs.map((paragraph) => (
-              <p key={paragraph.slice(0, 48)} className="mt-4 text-sm leading-7 text-slate-600">
+              <p key={paragraph.slice(0, 48)} className="mt-4 text-base leading-7 text-slate-600">
                 {paragraph}
               </p>
             ))}
-            <div className="mt-8 flex flex-wrap gap-x-8 gap-y-2 border-t border-slate-200 pt-8 text-sm">
+            <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 border-t border-slate-100 pt-8 text-sm">
               {intro.links.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="font-semibold text-slate-900 underline-offset-4 transition-colors hover:text-[#0d7a7a] hover:underline"
+                  className="inline-flex items-center gap-1 font-semibold text-teal-600 underline-offset-4 transition-colors hover:text-teal-700 hover:underline"
                 >
                   {link.label}
+                  <ArrowRight className="h-3.5 w-3.5" />
                 </a>
               ))}
             </div>

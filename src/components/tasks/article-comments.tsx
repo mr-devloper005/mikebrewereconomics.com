@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { MessageSquare, Trash2 } from "lucide-react";
+import { MessageSquare, Trash2, Send, Clock, Heart, User as UserIcon } from "lucide-react";
 import type { SitePost } from "@/lib/site-connector";
 import { RichContent, formatRichHtml } from "@/components/shared/rich-content";
 import { Button } from "@/components/ui/button";
@@ -245,79 +245,123 @@ export function ArticleComments({ slug }: { slug: string }) {
 
   return (
     <section className="mt-12" id="comments">
-      <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-        <MessageSquare className="h-4 w-4" />
-        Comments
+      <div className="mb-8 flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-100">
+          <MessageSquare className="h-5 w-5 text-teal-600" />
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold text-foreground">Discussion</h3>
+          <p className="text-sm text-muted-foreground">Share your thoughts and insights</p>
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="mt-6 rounded-2xl border border-border bg-white p-5 shadow-sm">
-        <div className="space-y-2">
-          <label htmlFor="comment-body" className="text-sm font-medium text-foreground">
-            Add a comment
-          </label>
-          <Textarea
-            id="comment-body"
-            value={commentBody}
-            onChange={(event) => setCommentBody(event.target.value)}
-            placeholder="Write your comment here"
-            className="min-h-28"
-            maxLength={2000}
-            disabled={limitReached}
-          />
+      <form onSubmit={handleSubmit} className="mb-8 rounded-2xl border border-slate-200/60 bg-gradient-to-br from-white to-slate-50 p-6 shadow-sm">
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-200">
+              <UserIcon className="h-4 w-4 text-slate-600" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-foreground">{getLocalAuthorName()}</p>
+              <p className="text-xs text-muted-foreground">Commenting as</p>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <label htmlFor="comment-body" className="text-sm font-medium text-foreground">
+              Share your perspective
+            </label>
+            <Textarea
+              id="comment-body"
+              value={commentBody}
+              onChange={(event) => setCommentBody(event.target.value)}
+              placeholder="What are your thoughts on this analysis? Share insights, ask questions, or provide additional context..."
+              className="min-h-24 border-slate-200 bg-white focus:border-teal-500 focus:ring-teal-500/20"
+              maxLength={2000}
+              disabled={limitReached}
+            />
+          </div>
         </div>
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-          <div className="space-y-1">
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
             <div
-              className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
+              className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium ${
                 limitReached
-                  ? "bg-destructive/10 text-destructive"
+                  ? "bg-red-100 text-red-700"
                   : remainingToday <= 3
                     ? "bg-amber-100 text-amber-700"
-                    : "bg-primary/10 text-primary"
+                    : "bg-teal-100 text-teal-700"
               }`}
             >
+              <Clock className="h-3 w-3" />
               {limitReached
-                ? `Daily limit reached: ${DAILY_COMMENT_LIMIT}/${DAILY_COMMENT_LIMIT}`
-                : `${remainingToday} of ${DAILY_COMMENT_LIMIT} comments left today`}
+                ? `Daily limit reached (${DAILY_COMMENT_LIMIT}/${DAILY_COMMENT_LIMIT})`
+                : `${remainingToday} comments remaining today`}
             </div>
             <p className="text-xs text-muted-foreground">
               {limitReached
-                ? `You can publish again after ${resetLabel}.`
-                : `Limit resets after ${resetLabel}.`}
+                ? `Resets at ${resetLabel}`
+                : `Resets at ${resetLabel}`}
             </p>
           </div>
-          <Button type="submit" disabled={limitReached}>
-            Publish Comment
+          <Button 
+            type="submit" 
+            disabled={limitReached}
+            className="bg-teal-600 hover:bg-teal-700 disabled:bg-slate-300"
+          >
+            <Send className="mr-2 h-4 w-4" />
+            Post Comment
           </Button>
         </div>
-        {formError ? <p className="mt-3 text-sm text-destructive">{formError}</p> : null}
+        {formError ? (
+          <div className="mt-4 rounded-lg bg-red-50 border border-red-200 p-3">
+            <p className="text-sm text-red-700">{formError}</p>
+          </div>
+        ) : null}
       </form>
 
       {mergedComments.length ? (
-        <div className="mt-6 space-y-4">
+        <div className="space-y-4">
           {visibleComments.map((comment) => {
             const isHighlighted = highlightId === comment.id;
             return (
               <div
                 key={comment.id}
                 id={`comment-${comment.id}`}
-                className={`rounded-2xl border p-4 ${
-                  isHighlighted ? "border-primary/50 bg-primary/5" : "border-border bg-white"
+                className={`group rounded-2xl border p-5 transition-all ${
+                  isHighlighted 
+                    ? "border-teal-500/50 bg-teal-50/50 shadow-sm" 
+                    : "border-slate-200/60 bg-white hover:border-slate-300/80 hover:shadow-sm"
                 }`}
               >
-                <div className="flex items-center justify-between gap-3">
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">{comment.authorName}</p>
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100">
+                      <UserIcon className="h-4 w-4 text-slate-600" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm font-semibold text-foreground">{comment.authorName}</p>
+                        {comment.source === "local" && (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
+                            <Heart className="h-3 w-3" />
+                            Local
+                          </span>
+                        )}
+                      </div>
+                      <div className="mt-1">
+                        <RichContent
+                          html={formatRichHtml(comment.body, "Comment added.")}
+                          className="text-sm text-slate-700 prose-sm prose-h2:text-xl prose-h3:text-lg prose-p:leading-relaxed"
+                        />
+                      </div>
+                    </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <p className="text-xs text-muted-foreground">
-                      {new Date(comment.createdAt).toLocaleDateString()}
-                    </p>
                     {comment.source === "local" ? (
                       <button
                         type="button"
                         onClick={() => handleDeleteLocalComment(comment.id)}
-                        className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted-foreground transition hover:border-destructive/30 hover:bg-destructive/5 hover:text-destructive"
+                        className="opacity-0 transition-opacity group-hover:opacity-100 inline-flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 text-slate-400 hover:border-red-300 hover:bg-red-50 hover:text-red-600"
                         aria-label="Delete local comment"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -325,41 +369,41 @@ export function ArticleComments({ slug }: { slug: string }) {
                     ) : null}
                   </div>
                 </div>
-                <RichContent
-                  html={formatRichHtml(comment.body, "Comment added.")}
-                  className="mt-2 text-sm text-muted-foreground prose-sm prose-h2:text-xl prose-h3:text-lg"
-                />
               </div>
             );
           })}
         </div>
       ) : (
-        <div className="mt-6 rounded-2xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">
-          No comments yet.
+        <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-200 mx-auto mb-4">
+            <MessageSquare className="h-6 w-6 text-slate-500" />
+          </div>
+          <h4 className="text-base font-medium text-slate-900 mb-2">Start the conversation</h4>
+          <p className="text-sm text-slate-600">Be the first to share your thoughts on this analysis.</p>
         </div>
       )}
 
       {totalPages > 1 ? (
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 text-sm text-muted-foreground">
-          <span>
-            Page {safePage} of {totalPages}
-          </span>
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-slate-200/60 bg-slate-50 p-4">
+          <div className="text-sm text-slate-600">
+            Showing <span className="font-medium text-slate-900">{(safePage - 1) * pageSize + 1}-{Math.min(safePage * pageSize, mergedComments.length)}</span> of <span className="font-medium text-slate-900">{mergedComments.length}</span> comments
+          </div>
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
               disabled={safePage === 1}
-              className="rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-foreground disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
             >
-              Previous
+              ← Previous
             </button>
             <button
               type="button"
               onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
               disabled={safePage === totalPages}
-              className="rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-foreground disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
             >
-              Next
+              Next →
             </button>
           </div>
         </div>
