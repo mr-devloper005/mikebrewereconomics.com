@@ -268,29 +268,34 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
           <div className={cn(isClassified ? "space-y-8" : "")}>
             {isArticle ? (
               <div className="mx-auto w-full max-w-4xl space-y-6 rounded-md border border-slate-200/90 bg-white p-6 shadow-[0_1px_0_rgba(0,0,0,0.04),0_18px_48px_rgba(15,23,42,0.06)] sm:p-10">
-                <h1 className="font-serif text-4xl font-semibold leading-tight tracking-tight text-[#222]">
-                  {post.title}
-                </h1>
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-600">
-                  <span>By {articleAuthor}</span>
-                  {articleDate ? <span>{articleDate}</span> : null}
-                  <Badge variant="secondary" className="inline-flex items-center gap-1">
-                    <Tag className="h-3.5 w-3.5" />
-                    {category}
-                  </Badge>
-                </div>
-                {postTags.length ? (
-                  <div className="flex flex-wrap gap-2">
-                    {postTags.map((tag) => (
-                      <Badge key={tag} variant="outline">
-                        {tag}
+                <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-start">
+                  <div>
+                    <h1 className="font-serif text-4xl font-semibold leading-tight tracking-tight text-[#222]">
+                      {post.title}
+                    </h1>
+                    <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-600">
+                      <span>By {articleAuthor}</span>
+                      <Badge variant="secondary" className="inline-flex items-center gap-1">
+                        <Tag className="h-3.5 w-3.5" />
+                        {category}
                       </Badge>
-                    ))}
+                    </div>
                   </div>
-                ) : null}
-                {articleSummary ? (
-                  <p className="text-base leading-7 text-slate-600">{articleSummary}</p>
-                ) : null}
+                  <div className="space-y-4">
+                    {articleSummary ? (
+                      <p className="text-base leading-7 text-slate-600">{articleSummary}</p>
+                    ) : null}
+                    {postTags.length ? (
+                      <div className="flex flex-wrap gap-2">
+                        {postTags.map((tag) => (
+                          <Badge key={tag} variant="outline">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
                 {images[0] ? (
                   <div className="relative aspect-[16/9] w-full overflow-hidden rounded-md border border-slate-200 bg-slate-100">
                     <ContentImage
