@@ -47,7 +47,6 @@ export default function CookiesPage() {
             A quick reference for {SITE_CONFIG.name}. Exact cookies depend on how the live site is hosted and which
             optional tools are turned on.
           </p>
-          <p className="mt-2 text-xs text-slate-400">Last updated April 10, 2026</p>
         </div>
 
         <div className="mt-12 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">

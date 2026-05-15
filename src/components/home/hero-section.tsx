@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Compass, Search, Sparkles, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { ContentImage } from "@/components/shared/content-image";
 import { SITE_CONFIG, type TaskConfig } from "@/lib/site-config";
 import { siteContent } from "@/config/site.content";
@@ -105,18 +104,6 @@ export function HeroSection({ images, tasks }: { images: string[]; tasks: TaskCo
               {siteContent.hero.title[0]} <span className="block opacity-90">{siteContent.hero.title[1]}</span>
             </h1>
             <p className={`mt-6 max-w-2xl text-base leading-8 sm:text-lg ${palette.body}`}>{siteContent.hero.description}</p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" className={`rounded-full px-6 ${palette.primary}`}>
-                <Link href={siteContent.hero.primaryCta.href}>
-                  {siteContent.hero.primaryCta.label}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className={`rounded-full px-6 ${palette.secondary}`}>
-                <Link href={siteContent.hero.secondaryCta.href}>{siteContent.hero.secondaryCta.label}</Link>
-              </Button>
-            </div>
 
             <div className="mt-8 grid max-w-2xl gap-3 sm:grid-cols-[1.1fr_0.9fr]">
               <div className={`flex items-center gap-3 rounded-[1.6rem] p-4 ${palette.card}`}>

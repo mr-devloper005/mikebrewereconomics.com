@@ -136,7 +136,6 @@ export const taskIntroCopy: Record<
     ],
     links: [
       { label: 'Search the full catalog', href: '/search?task=article' },
-      { label: 'Editorial blog', href: '/blog' },
       { label: 'About the project', href: '/about' },
     ],
   },

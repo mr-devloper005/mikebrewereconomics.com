@@ -15,7 +15,6 @@ import {
 import { useAuth } from '@/lib/auth-context'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
 import { cn } from '@/lib/utils'
-import { siteContent } from '@/config/site.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { NAVBAR_OVERRIDE_ENABLED, NavbarOverride } from '@/overrides/navbar'
 
@@ -95,9 +94,7 @@ const directoryPalette = {
 
 const resourceLinks = [
   { name: 'About', href: '/about' },
-  { name: 'Blog', href: '/blog' },
   { name: 'Help', href: '/help' },
-  { name: 'Status', href: '/status' },
 ]
 
 function EditorialLibraryNavbar() {
@@ -115,12 +112,6 @@ function EditorialLibraryNavbar() {
     <header className="sticky top-0 z-50 w-full shadow-[0_1px_0_rgba(0,0,0,0.08)]">
       <div className="bg-black text-[11px] font-medium uppercase tracking-[0.14em] text-white/90">
         <div className="mx-auto flex max-w-7xl items-center justify-end gap-6 px-4 py-2 sm:px-6 lg:px-8">
-          <Link href="/about" className="transition-colors hover:text-white">
-            Help
-          </Link>
-          <Link href="/search" className="underline decoration-white/40 underline-offset-4 transition-colors hover:text-white">
-            Advanced search
-          </Link>
           {!isAuthenticated ? (
             <Link href="/login" className="transition-colors hover:text-white">
               Sign in
@@ -137,9 +128,6 @@ function EditorialLibraryNavbar() {
             </span>
             <span className="min-w-0 leading-tight">
               <span className="block truncate text-sm font-bold tracking-tight text-white">{SITE_CONFIG.name}</span>
-              <span className="block truncate text-[9px] font-semibold uppercase tracking-[0.2em] text-white/55">
-                {siteContent.navbar.tagline}
-              </span>
             </span>
           </Link>
 
@@ -354,7 +342,6 @@ export function Navbar() {
                 </div>
                 <div className="min-w-0">
                   <span className="block truncate text-lg font-semibold">{SITE_CONFIG.name}</span>
-                  <span className="block truncate text-[10px] uppercase tracking-[0.22em] opacity-60">{siteContent.navbar.tagline}</span>
                 </div>
               </Link>
             </div>
@@ -405,7 +392,6 @@ export function Navbar() {
               </div>
               <div className="min-w-0">
                 <span className="block truncate text-xl font-semibold">{SITE_CONFIG.name}</span>
-                <span className="block truncate text-[10px] uppercase tracking-[0.24em] opacity-60">{siteContent.navbar.tagline}</span>
               </div>
             </Link>
 
@@ -483,7 +469,6 @@ export function Navbar() {
 
   const style = variantClasses[recipe.navbar]
   const isFloating = recipe.navbar === 'floating-bar'
-  const isEditorial = recipe.navbar === 'editorial-bar'
   const isUtility = recipe.navbar === 'utility-bar'
 
   return (
@@ -497,7 +482,6 @@ export function Navbar() {
               </div>
               <div className="min-w-0">
                 <span className="block truncate text-lg font-semibold">{SITE_CONFIG.name}</span>
-                <span className="block truncate text-[10px] uppercase tracking-[0.22em] opacity-70">{siteContent.navbar.tagline}</span>
               </div>
             </Link>
           </div>
@@ -544,11 +528,10 @@ export function Navbar() {
             </div>
             <div className="min-w-0">
               <span className="block truncate text-xl font-semibold">{SITE_CONFIG.name}</span>
-              <span className="block truncate text-[10px] uppercase tracking-[0.24em] opacity-70">{siteContent.navbar.tagline}</span>
             </div>
           </Link>
 
-          <div className={cn('mt-7 rounded-[1.35rem] border border-current/10 px-4 py-4', isFloating ? 'bg-white/6 backdrop-blur' : isEditorial ? 'bg-white/70' : isUtility ? 'bg-white/80' : 'bg-slate-50')}>
+          <div className={cn('mt-7 rounded-[1.35rem] border border-current/10 px-4 py-4', isFloating ? 'bg-white/6 backdrop-blur' : isUtility ? 'bg-white/80' : 'bg-slate-50')}>
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] opacity-70">
               <Search className="h-3.5 w-3.5" />
               Quick Find
