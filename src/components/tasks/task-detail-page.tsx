@@ -282,9 +282,6 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
                     </div>
                   </div>
                   <div className="space-y-4">
-                    {articleSummary ? (
-                      <p className="text-base leading-7 text-slate-600">{articleSummary}</p>
-                    ) : null}
                     {postTags.length ? (
                       <div className="flex flex-wrap gap-2">
                         {postTags.map((tag) => (
