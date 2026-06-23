@@ -1,7 +1,6 @@
 import Link from 'next/link'
-import { FileText, Building2, LayoutGrid, Tag, Github, Twitter, Linkedin, Image as ImageIcon, User, ArrowRight } from 'lucide-react'
+import { FileText, Building2, LayoutGrid, Tag, Image as ImageIcon, User, ArrowRight } from 'lucide-react'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
-import { siteContent } from '@/config/site.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { FOOTER_OVERRIDE_ENABLED, FooterOverride } from '@/overrides/footer'
 
@@ -26,7 +25,6 @@ const footerLinks = {
   })),
   company: [
     { name: 'About', href: '/about' },
-    { name: 'Blog', href: '/blog' },
   ],
   resources: [
     { name: 'Help Center', href: '/help' },
@@ -38,15 +36,8 @@ const footerLinks = {
     { name: 'Privacy', href: '/privacy' },
     { name: 'Terms', href: '/terms' },
     { name: 'Cookies', href: '/cookies' },
-    { name: 'Licenses', href: '/licenses' },
   ],
 }
-
-const socialLinks = [
-  { name: 'Twitter', href: 'https://twitter.com', icon: Twitter },
-  { name: 'GitHub', href: 'https://github.com', icon: Github },
-  { name: 'LinkedIn', href: 'https://linkedin.com', icon: Linkedin },
-]
 
 export function Footer() {
   if (FOOTER_OVERRIDE_ENABLED) {
@@ -89,7 +80,6 @@ export function Footer() {
                 </div>
                 <div>
                   <p className="text-lg font-semibold">{SITE_CONFIG.name}</p>
-                  <p className="text-xs uppercase tracking-[0.24em] text-slate-400">{siteContent.footer.tagline}</p>
                 </div>
               </div>
               <p className="mt-5 max-w-md text-sm leading-7 text-slate-300">{SITE_CONFIG.description}</p>
@@ -117,16 +107,6 @@ export function Footer() {
                   ))}
                 </ul>
               </div>
-              <div>
-                <h3 className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Connect</h3>
-                <div className="mt-4 flex gap-3">
-                  {socialLinks.map((item) => (
-                    <Link key={item.name} href={item.href} target="_blank" rel="noopener noreferrer" className="rounded-full border border-white/10 bg-white/8 p-2.5 text-slate-200 hover:bg-white/12 hover:text-white">
-                      <item.icon className="h-4 w-4" />
-                    </Link>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
           <div className="mt-10 border-t border-white/10 pt-5 text-sm text-slate-400">&copy; {new Date().getFullYear()} {SITE_CONFIG.name}. All rights reserved.</div>
@@ -146,22 +126,8 @@ export function Footer() {
               </div>
               <div>
                 <span className="block text-lg font-bold tracking-tight text-[#222]">{SITE_CONFIG.name}</span>
-                <span className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">{siteContent.footer.tagline}</span>
               </div>
             </Link>
-            <div className="flex flex-wrap gap-3">
-              {socialLinks.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-600 transition-colors hover:border-[#0d7a7a] hover:text-[#0d7a7a]"
-                >
-                  <item.icon className="h-4 w-4" />
-                </Link>
-              ))}
-            </div>
           </div>
           <nav className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-slate-200/90 pt-8 text-sm font-medium text-[#333]">
             <Link href="/" className="transition-colors hover:text-[#0d7a7a]">
@@ -215,7 +181,6 @@ export function Footer() {
               </div>
               <div>
                 <span className="block text-lg font-semibold">{SITE_CONFIG.name}</span>
-                <span className="text-xs uppercase tracking-[0.22em] text-slate-500">{siteContent.footer.tagline}</span>
               </div>
             </Link>
             <p className="mt-5 max-w-sm text-sm leading-7 text-slate-600">{SITE_CONFIG.description}</p>

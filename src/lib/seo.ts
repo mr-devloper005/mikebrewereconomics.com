@@ -304,7 +304,7 @@ export async function buildPageMetadata(options: PageMetadataOptions): Promise<M
 
 export const buildTaskMetadata = async (
   task: TaskKey,
-  options?: Omit<PageMetadataOptions, "path">
+  options?: Partial<PageMetadataOptions>
 ): Promise<Metadata> => {
   const config = getTaskConfig(task);
   const title = config ? `${config.label} | ${SITE_CONFIG.name}` : SITE_CONFIG.seo.title;

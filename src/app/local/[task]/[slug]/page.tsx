@@ -41,8 +41,8 @@ const getContent = (post: any): PostContent => {
 const getImageUrls = (post: any, content: PostContent) => {
   const media = Array.isArray(post.media) ? post.media : [];
   const mediaImages = media
-    .map((item) => item?.url)
-    .filter((url): url is string => isValidImageUrl(url));
+    .map((item: { url?: string }) => item?.url)
+    .filter((url: string | undefined): url is string => isValidImageUrl(url));
   const contentImages = Array.isArray(content.images)
     ? content.images.filter((url): url is string => isValidImageUrl(url))
     : [];
@@ -245,7 +245,7 @@ export default function LocalPostDetailPage() {
                 <div className="rounded-2xl border border-border bg-card p-5">
                   <h2 className="text-base font-semibold text-foreground">Highlights</h2>
                   <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-                    {content.highlights.map((item) => (
+                    {content.highlights.map((item: string) => (
                       <li key={item}>• {item}</li>
                     ))}
                   </ul>

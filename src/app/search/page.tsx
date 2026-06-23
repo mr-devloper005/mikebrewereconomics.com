@@ -1,12 +1,12 @@
 import { PageShell } from "@/components/shared/page-shell";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { Search } from "lucide-react";
 import { fetchSiteFeed } from "@/lib/site-connector";
 import { buildPostUrl, getPostTaskKey } from "@/lib/task-data";
 import { getMockPostsForTask } from "@/lib/mock-posts";
 import { SITE_CONFIG } from "@/lib/site-config";
-import { TaskPostCard } from "@/components/shared/task-post-card";
 
 export const revalidate = 3;
 
@@ -18,6 +18,16 @@ const stripHtml = (value: string) => value.replace(/<[^>]*>/g, " ");
 const compactText = (value: unknown) => {
   if (typeof value !== "string") return "";
   return stripHtml(value).replace(/\s+/g, " ").trim().toLowerCase();
+};
+
+const displayText = (value: unknown, fallback = "") => {
+  if (typeof value !== "string") return fallback;
+  return stripHtml(value).replace(/\s+/g, " ").trim() || fallback;
+};
+
+const truncateText = (value: string, max = 180) => {
+  if (value.length <= max) return value;
+  return `${value.slice(0, max).trimEnd()}...`;
 };
 
 export default async function SearchPage({
@@ -99,11 +109,31 @@ export default async function SearchPage({
       }
     >
       {results.length ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4">
           {results.map((post) => {
             const task = getPostTaskKey(post);
             const href = task ? buildPostUrl(task, post.slug) : `/posts/${post.slug}`;
-            return <TaskPostCard key={post.id} post={post} href={href} />;
+            const content = post.content && typeof post.content === "object" ? post.content : {};
+            const category = displayText((content as any).category || post.tags?.[0], task || "Post");
+            const summary = truncateText(
+              displayText((content as any).description || (content as any).excerpt || post.summary, "Open this result to read more.")
+            );
+
+            return (
+              <Link
+                key={post.id}
+                href={href}
+                className="block rounded-md border border-slate-200 bg-white p-5 shadow-sm transition-colors hover:border-[#0d7a7a]/40 hover:bg-slate-50"
+              >
+                <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0d7a7a]">
+                  <span>{category}</span>
+                  {task ? <span className="text-slate-300">/</span> : null}
+                  {task ? <span className="text-slate-500">{task}</span> : null}
+                </div>
+                <h2 className="mt-3 text-xl font-semibold leading-snug text-slate-950">{post.title}</h2>
+                <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-600">{summary}</p>
+              </Link>
+            );
           })}
         </div>
       ) : (

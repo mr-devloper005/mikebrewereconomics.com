@@ -61,7 +61,6 @@ export default function TermsPage() {
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">Legal</p>
           <h1 className="mt-3 font-serif text-4xl font-semibold tracking-tight text-[#222]">Terms of use</h1>
           <p className="mt-4 text-sm text-slate-600">{SITE_CONFIG.name}</p>
-          <p className="mt-2 text-xs text-slate-400">Effective April 10, 2026</p>
         </div>
 
         <ol className="mt-12 space-y-0">

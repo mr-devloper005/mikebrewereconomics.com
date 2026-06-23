@@ -27,7 +27,6 @@ export default function PrivacyPage() {
           <aside className="mb-10 lg:mb-0">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#0d7a7a]">Legal</p>
             <h1 className="mt-2 font-serif text-2xl font-semibold leading-tight text-[#222] lg:text-3xl">Privacy</h1>
-            <p className="mt-3 text-xs text-slate-500">Effective April 10, 2026</p>
             <nav className="mt-8 hidden space-y-2 text-sm lg:block" aria-label="On this page">
               {toc.map((item) => (
                 <a
